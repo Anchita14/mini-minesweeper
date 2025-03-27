@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: center; /*center texts inside App container*/
 }
 
 .App-logo {
@@ -36,3 +36,36 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+.grid {
+  display: grid; /*activates CSS grid layout*/
+  grid-template-columns: repeat(5, 50px); /*creates a 5 column grid*/
+  grid-gap: 5px; /*gap between grid cells horizontally*/
+  justify-content: center; /*centers grid horizontally*/
+  margin-top: 20px; /*space above grid*/
+}
+
+
+.cell {
+  width: 50px; /*cell width*/
+  height: 50px; /*cell height*/
+  background-color: #ccc; /*cell background color*/
+  display: flex; /*initializes flex display*/
+  align-items: center; /*centers item in cell*/
+  justify-content: center; /*centers item in cell*/
+  cursor: pointer; /*changes cursor to a pointer when on the cell*/
+  margin: 5px; /*space between cells vertically*/
+}
+
+.cell.revealed {
+  background-color: #ddd; /*change cell color once it's revealed*/
+}
+
+button {
+  margin-top: 20px; /*space above button*/
+  padding: 10px; /*space within button*/
+  font-size: 16px; /*text size*/
+}
+
