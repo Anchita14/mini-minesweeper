@@ -91,7 +91,7 @@ const App = () => {
                 className={`cell ${cell.isRevealed ? 'revealed' : ''}`}
                 onClick={() => revealCell(i, j)}
             >
-              //if the cell is a bomb, displays a bomb emoji
+
               {cell.isRevealed ? (cell.isBomb ? '💣' : '') : ''}
             </div>
         );
