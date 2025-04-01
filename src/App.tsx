@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
 //defines the cell type with variables for if it is a bomb or if it has been revealed by the user
@@ -40,6 +40,7 @@ const App = () => {
   const [grid, setGrid] = useState(() => generateGrid(bombLocation));
   const [gameOver, setGameOver] = useState(false);
   const [gameWin, setGameWin] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
 
   // reveal cell logic
   const revealCell = (row: number, col: number) => {
@@ -55,6 +56,7 @@ const App = () => {
     // checks if the revealed cell is a bomb and ends game if it is
     if (newGrid[row][col].isBomb) {
       setGameOver(true);
+      setCountdown(5); // Start countdown if game is over
       return;
     }
 
@@ -72,6 +74,7 @@ const App = () => {
     if (allSafeRevealed) {
       setGameWin(true);
       setGameOver(true);
+      setCountdown(5); // Start countdown if game is won
     }
 
     setGrid(newGrid);
@@ -85,7 +88,20 @@ const App = () => {
     setGrid(generateGrid(newBombLocation)); // creates a new grid with the new bomb location
     setGameOver(false);
     setGameWin(false);
+    setCountdown(null); // Reset countdown
   };
+
+  // Automatically restart the game after 5 seconds when game is over
+  useEffect(() => {
+    if (countdown === null) return;
+
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      resetGame();
+    }
+  }, [countdown]);
 
   return (
       //displays if you win or if the game is over and then generates a new board whenever
@@ -93,6 +109,7 @@ const App = () => {
       <div className="App">
         <h1>Mini Minesweeper</h1>
         {gameOver && <h2>{gameWin ? "You Win!" : "Game Over!"}</h2>}
+        {countdown !== null && <h3>Game Restarting in {countdown}...</h3>}
         <div className="grid">
           {grid.map((row, i) =>
               row.map((cell, j) => (
@@ -113,6 +130,7 @@ const App = () => {
 };
 
 export default App;
+
 
 
 
