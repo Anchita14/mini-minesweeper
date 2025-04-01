@@ -12,10 +12,9 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 200vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,6 +27,15 @@
   color: #61dafb;
 }
 
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers everything inside */
+  justify-content: center;
+  min-height: 100vh; /* Ensures vertical centering */
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -37,35 +45,41 @@
   }
 }
 
-
-
 .grid {
   display: grid; /*activates CSS grid layout*/
-  grid-template-columns: repeat(5, 50px); /*creates a 5 column grid*/
+  grid-template-columns: repeat(5, 70px); /*creates a 5 column grid*/
   grid-gap: 5px; /*gap between grid cells horizontally*/
-  justify-content: center; /*centers grid horizontally*/
-  margin-top: 20px; /*space above grid*/
+  margin: 20px; /*space above grid*/
+  align-items: center;
+  width: fit-content;
 }
+
 
 
 .cell {
   width: 50px; /*cell width*/
   height: 50px; /*cell height*/
-  background-color: #ccc; /*cell background color*/
+  background-color: #2d21df; /*cell background color*/
   display: flex; /*initializes flex display*/
   align-items: center; /*centers item in cell*/
   justify-content: center; /*centers item in cell*/
   cursor: pointer; /*changes cursor to a pointer when on the cell*/
-  margin: 5px; /*space between cells vertically*/
+  margin: 20px; /*space between cells vertically*/
 }
 
 .cell.revealed {
   background-color: #ddd; /*change cell color once it's revealed*/
 }
 
+.cell.bomb {
+  background-color: red !important; /* bomb cells turn red */
+  font-weight: bold;
+}
+
 button {
-  margin-top: 20px; /*space above button*/
-  padding: 10px; /*space within button*/
+  margin-top: 10px; /*space above button*/
+  padding: 10px 20px; /*space within button*/
   font-size: 16px; /*text size*/
 }
+
 

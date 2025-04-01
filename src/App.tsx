@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 //defines the cell type with variables for if it is a bomb or if it has been revealed by the user
 type Cell = {
@@ -10,31 +10,34 @@ type Cell = {
 // game grid size for 5x5
 const gridSize = 5;
 
+// function to generate a random bomb location
+const generateBombLocation = () => ({
+  row: Math.floor(Math.random() * gridSize),
+  col: Math.floor(Math.random() * gridSize),
+});
+
 // initializes a game board using a 2d array filled with cell objects using nested
 // loops which are set to default cell objects for now
-const generateGrid = () => {
+const generateGrid = (bombLocation: { row: number; col: number }) => {
   const newGrid: Cell[][] = [];
   for (let i = 0; i < gridSize; i++) {
     newGrid[i] = [];
     for (let j = 0; j < gridSize; j++) {
-      newGrid[i][j] = { isBomb: false, isRevealed: false };
+      newGrid[i][j] = {
+        isBomb: i === bombLocation.row && j === bombLocation.col,
+        isRevealed: false
+      };
     }
   }
-
-  // uses math random to randomly select a column and row to place one bomb and set that cell
-  // as a bomb cell object
-  const bombRow = Math.floor(Math.random() * gridSize);
-  const bombCol = Math.floor(Math.random() * gridSize);
-  newGrid[bombRow][bombCol].isBomb = true;
-
   //return the final grid
   return newGrid;
 };
 
 //defines main react component for the game
 const App = () => {
-  // initialize game states -- creates grid when game states, tracks if the game is over or won
-  const [grid, setGrid] = useState(generateGrid());
+  // initializes bomb location, game states, and creates the grid
+  const [bombLocation, setBombLocation] = useState(generateBombLocation());
+  const [grid, setGrid] = useState(() => generateGrid(bombLocation));
   const [gameOver, setGameOver] = useState(false);
   const [gameWin, setGameWin] = useState(false);
 
@@ -59,7 +62,7 @@ const App = () => {
     let allSafeRevealed = true;
     for (let i = 0; i < gridSize; i++) {
       for (let j = 0; j < gridSize; j++) {
-        if (!newGrid[i][j].isRevealed) {
+        if (!newGrid[i][j].isRevealed && !newGrid[i][j].isBomb) {
           allSafeRevealed = false;
         }
       }
@@ -74,36 +77,14 @@ const App = () => {
     setGrid(newGrid);
   };
 
-  const renderGrid = () => {
-    //prevent errors if the grid isn't defined
-    if (!grid || grid.length === 0) return null;
-
-    //loops through grid and creates a <div> for each cell
-    const rows = [];
-    for (let i = 0; i < gridSize; i++) {
-      const rowCells = [];
-      for (let j = 0; j < gridSize; j++) {
-        const cell = grid[i][j];
-        rowCells.push(
-            <div
-                //creates a unique key for each cell and sets the style for a revealed cell
-                key={`${i}-${j}`}
-                className={`cell ${cell.isRevealed ? 'revealed' : ''}`}
-                onClick={() => revealCell(i, j)}
-            >
-
-              {cell.isRevealed ? (cell.isBomb ? '💣' : '') : ''}
-            </div>
-        );
-      }
-      //groups each row into a div
-      rows.push(
-          <div key={i} className="row">
-            {rowCells}
-          </div>
-      );
-    }
-    return rows;
+  // function to reset the game
+  const resetGame = () => {
+    // generates a new bomb location
+    const newBombLocation = generateBombLocation();
+    setBombLocation(newBombLocation);
+    setGrid(generateGrid(newBombLocation)); // creates a new grid with the new bomb location
+    setGameOver(false);
+    setGameWin(false);
   };
 
   return (
@@ -111,19 +92,27 @@ const App = () => {
       // reset game is called
       <div className="App">
         <h1>Mini Minesweeper</h1>
-        {gameOver && <h2>{gameWin ? 'You Win!' : 'Game Over!'}</h2>}
-        <div className="grid">{renderGrid()}</div>
-        <button onClick={() => {
-          setGrid(generateGrid()); // Generate a new grid
-          setGameOver(false);      // Reset game over state
-          setGameWin(false);       // Reset game win state
-        }}>
-          Reset Game
-        </button>
+        {gameOver && <h2>{gameWin ? "You Win!" : "Game Over!"}</h2>}
+        <div className="grid">
+          {grid.map((row, i) =>
+              row.map((cell, j) => (
+                  <div
+                      //creates a unique key for each cell and sets the style for a revealed cell
+                      key={`${i}-${j}`}
+                      className={`cell ${cell.isRevealed ? (cell.isBomb ? "bomb revealed" : "revealed") : ""}`}
+                      onClick={() => revealCell(i, j)}
+                  >
+                    {cell.isRevealed ? (cell.isBomb ? "💣" : "") : ""}
+                  </div>
+              ))
+          )}
+        </div>
+        <button onClick={resetGame}>Reset Game</button>
       </div>
   );
 };
 
 export default App;
+
 
 
