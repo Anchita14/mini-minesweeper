@@ -47,8 +47,8 @@
 
 .grid {
   display: grid; /*activates CSS grid layout*/
-  grid-template-columns: repeat(5, 70px); /*creates a 5 column grid*/
-  grid-gap: 5px; /*gap between grid cells horizontally*/
+  grid-template-columns: repeat(5, 50px); /*creates a 5 column grid*/
+  grid-gap: 3px; /*gap between grid cells horizontally*/
   margin: 20px; /*space above grid*/
   align-items: center;
   width: fit-content;
@@ -64,7 +64,6 @@
   align-items: center; /*centers item in cell*/
   justify-content: center; /*centers item in cell*/
   cursor: pointer; /*changes cursor to a pointer when on the cell*/
-  margin: 20px; /*space between cells vertically*/
 }
 
 .cell.revealed {

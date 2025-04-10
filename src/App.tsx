@@ -93,12 +93,15 @@ const App = () => {
 
   // Automatically restart the game after 5 seconds when game is over
   useEffect(() => {
-    if (countdown === null) return;
+    if (countdown === null) return; // if countdown is not running, do nothing
 
     if (countdown > 0) {
+      // wait 1 sec before reducing countdown by 1
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      // cleanup timer to avoid memory leaks
       return () => clearTimeout(timer);
     } else {
+      // once the countdown hits 0, the game resets
       resetGame();
     }
   }, [countdown]);
