@@ -81,4 +81,20 @@ button {
   font-size: 16px; /*text size*/
 }
 
+.popup {
+  position: fixed; /*fixes popup position*/
+  display: flex; /*enables flex display*/
+  align-items: center; /*vertically centers popup*/
+  justify-content: center; /*horizontally centers popup*/
+}
+
+.popup-content {
+  background-color: white; /*background color of popup*/
+  color: black; /*font color*/
+  padding: 10px 15px; /*space within popup*/
+  border-radius: 10px; /*curved edge of popup*/
+  text-align: center; /*centers text*/
+  font-size: 1rem; /*popup text font size*/
+}
+
 

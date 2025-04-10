@@ -12,8 +12,10 @@ const gridSize = 5;
 
 // function to generate a random bomb location
 const generateBombLocation = () => ({
-  row: Math.floor(Math.random() * gridSize),
-  col: Math.floor(Math.random() * gridSize),
+  //row: Math.floor(Math.random() * gridSize),
+  //col: Math.floor(Math.random() * gridSize),
+  row: 0,
+  col: 0,
 });
 
 // initializes a game board using a 2d array filled with cell objects using nested
@@ -111,8 +113,16 @@ const App = () => {
       // reset game is called
       <div className="App">
         <h1>Mini Minesweeper</h1>
-        {gameOver && <h2>{gameWin ? "You Win!" : "Game Over!"}</h2>}
-        {countdown !== null && <h3>Game Restarting in {countdown}...</h3>}
+
+        {gameOver && (
+            <div className="popup">
+              <div className="popup-content">
+                <h2>{gameWin ? "🎉 You Win!" : "💥 Game Over!"}</h2>
+                <p>Game restarting in {countdown}...</p>
+              </div>
+            </div>
+        )}
+
         <div className="grid">
           {grid.map((row, i) =>
               row.map((cell, j) => (
