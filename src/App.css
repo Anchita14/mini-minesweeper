@@ -1,5 +1,27 @@
 .App {
   text-align: center; /*center texts inside App container*/
+  flex-grow: 1;
+}
+
+h1 {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  text-align: center;
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.AppContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full screen height */
+  overflow: hidden;
+  background-color: #f0f0f0;
+  font-family: sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .App-logo {
@@ -31,9 +53,8 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centers everything inside */
+  align-items: center;
   justify-content: center;
-  min-height: 100vh; /* Ensures vertical centering */
 }
 
 @keyframes App-logo-spin {
@@ -45,25 +66,56 @@
   }
 }
 
-.grid {
-  display: grid; /*activates CSS grid layout*/
-  grid-template-columns: repeat(5, 50px); /*creates a 5 column grid*/
-  grid-gap: 3px; /*gap between grid cells horizontally*/
-  margin: 20px; /*space above grid*/
+.rules {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  width: fit-content;
+  justify-content: center;
+  margin-right: 20px;
+  font-size: 1.2rem;
 }
 
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+  font-size: 1.2rem;
+}
 
+.Sidebar {
+  width: 300px;
+  height: 30%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 90px); /* 5 columns of 90px */
+  grid-template-rows: repeat(5, 90px);    /* 5 rows of 90px */
+  gap: 3px; /* spacing between cells */
+  justify-content: center;
+  margin-top: 20px;
+}
 
 .cell {
-  width: 50px; /*cell width*/
-  height: 50px; /*cell height*/
-  background-color: #2d21df; /*cell background color*/
-  display: flex; /*initializes flex display*/
-  align-items: center; /*centers item in cell*/
-  justify-content: center; /*centers item in cell*/
-  cursor: pointer; /*changes cursor to a pointer when on the cell*/
+  width: 90px; /*cell width*/
+  height: 90px; /*cell height*/
+  background-color: #0f7872; /*cell color*/
+  display: flex; /*enables flexbox style*/
+  align-items: center; /*vertically centers content*/
+  justify-content: center; /*horizontally centers content*/
+}
+
+.cell:hover {
+  background-color: #139891;
 }
 
 .cell.revealed {
@@ -76,7 +128,7 @@
 }
 
 button {
-  margin-top: 10px; /*space above button*/
+  margin-top: 40px; /*space above button*/
   padding: 10px 20px; /*space within button*/
   font-size: 16px; /*text size*/
 }
@@ -96,5 +148,6 @@ button {
   text-align: center; /*centers text*/
   font-size: 1rem; /*popup text font size*/
 }
+
 
 
