@@ -34,7 +34,7 @@ const generateGrid = (bombLocation: { row: number; col: number }) => {
 };
 
 //defines main react component for the game
-const App = () => {
+const App = ({ exposeBombs = false }) => {
   // initializes bomb location, game states, and creates the grid
   const [bombLocation, setBombLocation] = useState(generateBombLocation());
   const [grid, setGrid] = useState(() => generateGrid(bombLocation));
@@ -166,13 +166,15 @@ const App = () => {
             {grid.map((row, i) =>
                 row.map((cell, j) => (
                     <div
-                        //creates a unique key for each cell and sets the style for a revealed cell
                         key={`${i}-${j}`}
+                        data-testid={cell.isBomb && exposeBombs ? "bomb" : undefined}
+                        data-cell-id={`${i}-${j}`}
                         className={`cell ${cell.isRevealed ? (cell.isBomb ? "bomb revealed" : "revealed") : ""}`}
                         onClick={() => revealCell(i, j)}
                     >
                       {cell.isRevealed ? (cell.isBomb ? "💣" : "") : ""}
                     </div>
+
                 ))
             )}
           </div>
