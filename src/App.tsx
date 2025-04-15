@@ -12,10 +12,8 @@ const gridSize = 5;
 
 // function to generate a random bomb location
 const generateBombLocation = () => ({
-  //row: Math.floor(Math.random() * gridSize),
-  //col: Math.floor(Math.random() * gridSize),
-  row: 0,
-  col: 0,
+  row: Math.floor(Math.random() * gridSize),
+  col: Math.floor(Math.random() * gridSize),
 });
 
 // initializes a game board using a 2d array filled with cell objects using nested
@@ -127,7 +125,7 @@ const App = () => {
 
   return (
       //displays if you win or if the game is over and then generates a new board whenever
-      // reset game is called
+      // reset game is called and also adds game rules and a scoreboard to both sides of the grid
       <div className="AppContainer">
         <div className="Sidebar rules">
           <h2>Game Rules</h2>
@@ -140,13 +138,12 @@ const App = () => {
 
         <div className="App">
           <h1>Mini Minesweeper</h1>
-
           {(gameOver || showResetConfirm) && (
               <div className="popup">
                 <div className="popup-content">
                   {showResetConfirm ? (
                       <>
-                        <h2>Reset Game?</h2>
+                        <h2>🔄 Reset Game?</h2>
                         <p>This will start a new game. Are you sure you want to continue?</p>
                         <button onClick={resetGame}>Yes</button>
                         <button onClick={() => setShowResetConfirm(false)}>No</button>
@@ -175,7 +172,7 @@ const App = () => {
                 ))
             )}
           </div>
-          <button onClick={() => setShowResetConfirm(true)}>Reset Game</button>
+          <button onClick={() => setShowResetConfirm(true)}>🔄 Reset Game</button>
         </div>
 
         <div className="Sidebar scoreboard">

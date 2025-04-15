@@ -112,6 +112,7 @@ h1 {
   display: flex; /*enables flexbox style*/
   align-items: center; /*vertically centers content*/
   justify-content: center; /*horizontally centers content*/
+  font-size: 2rem; /*font size for content in cell*/
 }
 
 .cell:hover {
