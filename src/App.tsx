@@ -127,6 +127,7 @@ const App = () => {
       //displays if you win or if the game is over and then generates a new board whenever
       // reset game is called and also adds game rules and a scoreboard to both sides of the grid
       <div className="AppContainer">
+        {/* left side section -- provides game rules */}
         <div className="Sidebar rules">
           <h2>Game Rules</h2>
           <ul>
@@ -137,6 +138,8 @@ const App = () => {
         </div>
 
         <div className="App">
+          {/* main header and game -- checks for game over and reset before proceeding
+          for a new game -- implementation of reset game button and countdown included */}
           <h1>Mini Minesweeper</h1>
           {(gameOver || showResetConfirm) && (
               <div className="popup">
@@ -158,6 +161,7 @@ const App = () => {
               </div>
           )}
 
+          {/* grid section -- checks for revealed cells */}
           <div className="grid">
             {grid.map((row, i) =>
                 row.map((cell, j) => (
@@ -175,6 +179,7 @@ const App = () => {
           <button onClick={() => setShowResetConfirm(true)}>🔄 Reset Game</button>
         </div>
 
+        {/* right side section -- adds up wins and losses for games */}
         <div className="Sidebar scoreboard">
           <h2>Scoreboard</h2>
           <p>🎉 Wins: {wins}</p>

@@ -1,27 +1,27 @@
 .App {
   text-align: center; /*center texts inside App container*/
-  flex-grow: 1;
+  flex-grow: 1; /*take up available space inside a flex container*/
 }
 
 h1 {
-  position: absolute;
-  top: 40px;
-  width: 100%;
-  text-align: center;
-  font-size: 2.5rem;
-  color: #333;
+  position: absolute; /*positions content relative to nearest ancestor*/
+  top: 40px; /*space from top of container*/
+  width: 100%; /*takes full width of block*/
+  text-align: center; /*centers text within block*/
+  font-size: 2.5rem; /*font size*/
+  color: #333; /*text color*/
 }
 
 .AppContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex; /*turns on flexstyle*/
+  justify-content: center; /*centers horizontally*/
+  align-items: center; /*centers vertically*/
   height: 100vh; /* Full screen height */
-  overflow: hidden;
-  background-color: #f0f0f0;
-  font-family: sans-serif;
-  padding: 20px;
-  box-sizing: border-box;
+  overflow: hidden; /*hides any content that overflow's the element's box*/
+  background-color: #f0f0f0; /*background of app*/
+  font-family: sans-serif; /*font style*/
+  padding: 20px; /*space within container*/
+  box-sizing: border-box; /*paddings and borders are included in height/width*/
 }
 
 .App-logo {
@@ -35,14 +35,10 @@ h1 {
   }
 }
 .App-header {
-  background-color: #282c34;
-  min-height: 200vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  display: flex; /*turns on flexstyle*/
+  flex-direction: column; /*stacks child items vertically*/
+  align-items: center; /*center vertically*/
+  justify-content: center; /*centers horizontally*/
 }
 
 .App-link {
@@ -50,11 +46,11 @@ h1 {
 }
 
 .App {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  text-align: center; /*centers text*/
+  display: flex; /*turns on flexstyle*/
+  flex-direction: column; /*aligns items in column*/
+  align-items: center; /*centers vertically*/
+  justify-content: center; /*centers horizontally*/
 }
 
 @keyframes App-logo-spin {
@@ -67,33 +63,32 @@ h1 {
 }
 
 .rules {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-right: 20px;
-  font-size: 1.2rem;
+  display: flex; /*turns on flexstyle*/
+  flex-direction: column; /*directs content into a column*/
+  align-items: center; /*centers items vertically*/
+  justify-content: center; /*centers items horizontally*/
+  margin-right: 20px; /*space left to the right side*/
+  font-size: 1.2rem; /*content font size*/
 }
 
 .scoreboard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-left: 20px;
-  font-size: 1.2rem;
+  display: flex; /*turns on flexstyle*/
+  flex-direction: column; /*directs content into a column*/
+  align-items: center; /*centers items vertically*/
+  justify-content: center; /*centers items horizontally*/
+  margin-left: 20px; /*space left to the left side*/
+  font-size: 1.2rem; /*content font size*/
 }
 
 .Sidebar {
-  width: 300px;
-  height: 30%;
-  padding: 10px;
-  box-sizing: border-box;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  justify-content: center;
-  align-items: center;
+  width: 300px; /*sidebar width*/
+  height: 30%; /*sidebar height*/
+  padding: 10px; /*space within sidebar*/
+  background-color: #ffffff; /*sidebar color*/
+  border-radius: 10px; /*box corner curves*/
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /*box shadow*/
+  justify-content: center; /*aligns items horizontally*/
+  align-items: center; /*aligns items vertically*/
 }
 
 .grid {
@@ -101,8 +96,8 @@ h1 {
   grid-template-columns: repeat(5, 90px); /* 5 columns of 90px */
   grid-template-rows: repeat(5, 90px);    /* 5 rows of 90px */
   gap: 3px; /* spacing between cells */
-  justify-content: center;
-  margin-top: 20px;
+  justify-content: center; /*horizontally centers content*/
+  margin-top: 20px; /*space left at the top of the grid*/
 }
 
 .cell {
@@ -116,7 +111,7 @@ h1 {
 }
 
 .cell:hover {
-  background-color: #139891;
+  background-color: #139891; /*color cell changes to when hovered over*/
 }
 
 .cell.revealed {
@@ -125,7 +120,6 @@ h1 {
 
 .cell.bomb {
   background-color: red !important; /* bomb cells turn red */
-  font-weight: bold;
 }
 
 button {
