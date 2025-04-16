@@ -12,6 +12,12 @@ h1 {
   color: #333; /*text color*/
 }
 
+.rules ul {
+  padding-left: 20px;
+}
+
+
+
 .AppContainer {
   display: flex; /*turns on flexstyle*/
   justify-content: center; /*centers horizontally*/
@@ -69,6 +75,7 @@ h1 {
   justify-content: center; /*centers items horizontally*/
   margin-right: 20px; /*space left to the right side*/
   font-size: 1.2rem; /*content font size*/
+  padding: 20px;
 }
 
 .scoreboard {
@@ -126,6 +133,7 @@ button {
   margin-top: 40px; /*space above button*/
   padding: 10px 20px; /*space within button*/
   font-size: 16px; /*text size*/
+  background-color: lightblue; /*button color*/
 }
 
 .popup {

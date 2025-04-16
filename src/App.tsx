@@ -12,8 +12,10 @@ const gridSize = 5;
 
 // function to generate a random bomb location
 const generateBombLocation = () => ({
-  row: Math.floor(Math.random() * gridSize),
-  col: Math.floor(Math.random() * gridSize),
+  //row: Math.floor(Math.random() * gridSize),
+  //col: Math.floor(Math.random() * gridSize),
+  row: 0,
+  col: 0,
 });
 
 // initializes a game board using a 2d array filled with cell objects using nested
@@ -42,19 +44,9 @@ const App = ({ exposeBombs = false }) => {
   const [gameWin, setGameWin] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [showResetConfirm, setShowResetConfirm] = useState(false); // controls if reset popup is shown
+  const [wins, setWins] = useState<number | 0>(0);
+  const [losses, setLosses] = useState<number | 0>(0);
 
-  // initializes win/loss score and stores in localStorage
-  const [wins, setWins] = useState(() => Number(localStorage.getItem("wins")) || 0);
-  const [losses, setLosses] = useState(() => Number(localStorage.getItem("losses")) || 0);
-
-  // update localStorage when wins or losses change
-  useEffect(() => {
-    localStorage.setItem("wins", wins.toString());
-  }, [wins]);
-
-  useEffect(() => {
-    localStorage.setItem("losses", losses.toString());
-  }, [losses]);
 
   // reveal cell logic
   const revealCell = (row: number, col: number) => {
@@ -123,70 +115,86 @@ const App = ({ exposeBombs = false }) => {
     }
   }, [countdown]);
 
-  return (
-      //displays if you win or if the game is over and then generates a new board whenever
-      // reset game is called and also adds game rules and a scoreboard to both sides of the grid
-      <div className="AppContainer">
-        {/* left side section -- provides game rules */}
-        <div className="Sidebar rules">
-          <h2>Game Rules</h2>
-          <ul>
-            <li>Click on a tile to reveal it</li>
-            <li>Avoid the 💣</li>
-            <li>Reveal all the safe cells to win</li>
-          </ul>
-        </div>
+  // function for left side section of game rules
+  const renderSidebarRules = () => (
+      <div className="Sidebar rules">
+        <h2>Game Rules</h2>
+        <ul>
+          <li>Click on a tile to reveal it</li>
+          <li>Avoid the 💣</li>
+          <li>Reveal all the safe cells to win</li>
+        </ul>
+      </div>
+  );
 
-        <div className="App">
-          {/* main header and game -- checks for game over and reset before proceeding
-          for a new game -- implementation of reset game button and countdown included */}
-          <h1>Mini Minesweeper</h1>
-          {(gameOver || showResetConfirm) && (
-              <div className="popup">
-                <div className="popup-content">
-                  {showResetConfirm ? (
-                      <>
-                        <h2>🔄 Reset Game?</h2>
-                        <p>This will start a new game. Are you sure you want to continue?</p>
-                        <button onClick={resetGame}>Yes</button>
-                        <button onClick={() => setShowResetConfirm(false)}>No</button>
-                      </>
-                  ) : (
-                      <>
-                        <h2>{gameWin ? "🎉 You Win!" : "💥 Game Over!"}</h2>
-                        <p>Game restarting in {countdown}...</p>
-                      </>
-                  )}
-                </div>
-              </div>
-          )}
+  // function for popup feature of game -- checks for game over and reset before proceeding
+  // for a new game -- includes popup implementation
+  const renderPopup = () => {
+    if (!(gameOver || showResetConfirm)) return null;
 
-          {/* grid section -- checks for revealed cells */}
-          <div className="grid">
-            {grid.map((row, i) =>
-                row.map((cell, j) => (
-                    <div
-                        key={`${i}-${j}`}
-                        data-testid={cell.isBomb && exposeBombs ? "bomb" : undefined}
-                        data-cell-id={`${i}-${j}`}
-                        className={`cell ${cell.isRevealed ? (cell.isBomb ? "bomb revealed" : "revealed") : ""}`}
-                        onClick={() => revealCell(i, j)}
-                    >
-                      {cell.isRevealed ? (cell.isBomb ? "💣" : "") : ""}
-                    </div>
-
-                ))
+    return (
+        <div className="popup">
+          <div className="popup-content">
+            {showResetConfirm ? (
+                <>
+                  <h2>🔄 Reset Game?</h2>
+                  <p>This will start a new game. Are you sure you want to continue?</p>
+                  <button onClick={resetGame}>Yes</button>
+                  <button onClick={() => setShowResetConfirm(false)}>No</button>
+                </>
+            ) : (
+                <>
+                  <h2>{gameWin ? "🎉 You Win!" : "💥 Game Over!"}</h2>
+                  <p>Game restarting in {countdown}...</p>
+                </>
             )}
           </div>
+        </div>
+    );
+  };
+
+  // function for right side section of scoreboard -- adds up wins and losses for games
+  const renderSidebarScoreboard = () => (
+      <div className="Sidebar scoreboard">
+        <h2>Scoreboard</h2>
+        <p>🎉 Wins: {wins}</p>
+        <p>💥 Losses: {losses}</p>
+      </div>
+  );
+
+  // function for grid logic -- checks for revealed cells and bombs
+  const renderGrid = () => (
+      <div className="grid">
+        {grid.map((row, i) =>
+            row.map((cell, j) => (
+                <div
+                    key={`${i}-${j}`}
+                    data-testid={cell.isBomb && exposeBombs ? "bomb" : undefined}
+                    data-cell-id={`${i}-${j}`}
+                    className={`cell ${cell.isRevealed ? (cell.isBomb ? "bomb revealed" : "revealed") : ""}`}
+                    onClick={() => revealCell(i, j)}
+                >
+                  {cell.isRevealed ? (cell.isBomb ? "💣" : "") : ""}
+                </div>
+            ))
+        )}
+      </div>
+  );
+
+
+  return (
+      // displays if you win or if the game is over and then generates a new board whenever
+      // reset game is called and also adds game rules and a scoreboard to both sides of the grid
+      // and it uses multiple functions for each section of the screen
+      <div className="AppContainer">
+        {renderSidebarRules()}
+        <div className="App">
+          <h1>Mini Minesweeper</h1>
+          {renderPopup()}
+          {renderGrid()}
           <button onClick={() => setShowResetConfirm(true)}>🔄 Reset Game</button>
         </div>
-
-        {/* right side section -- adds up wins and losses for games */}
-        <div className="Sidebar scoreboard">
-          <h2>Scoreboard</h2>
-          <p>🎉 Wins: {wins}</p>
-          <p>💥 Losses: {losses}</p>
-        </div>
+        {renderSidebarScoreboard()}
       </div>
   );
 };
