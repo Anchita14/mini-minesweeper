@@ -1,126 +1,99 @@
 .App {
-  text-align: center; /*center texts inside App container*/
-  flex-grow: 1; /*take up available space inside a flex container*/
+  display: flex; /* turn on flexstyle */
+  flex-direction: column; /* directs content into a column */
+  align-items: center; /* centers content vertically */
+  text-align: center; /* center texts inside App container */
+  flex-grow: 1; /* take up available space inside a flex container */
 }
 
 h1 {
-  position: absolute; /*positions content relative to nearest ancestor*/
-  top: 1px; /*space from top of container*/
-  width: 100%; /*takes full width of block*/
-  text-align: center; /*centers text within block*/
-  font-size: 2.5rem; /*font size*/
-  color: #333; /*text color*/
+  position: absolute; /* positions content relative to nearest ancestor */
+  top: 0px; /* space from top of container */
+  width: 100%; /* takes full width of block */
+  text-align: center; /* centers text within block */
+  font-size: 2rem; /* font size */
+  color: #333; /* text color */
 }
 
 .rules ul {
-  padding-left: 20px;
+  padding-left: 20px; /* padding on the left side */
 }
 
 .AppContainer {
-  display: flex; /*turns on flexstyle*/
-  justify-content: center; /*centers horizontally*/
-  align-items: center; /*centers vertically*/
-  height: 100vh; /* Full screen height */
-  overflow: hidden; /*hides any content that overflow's the element's box*/
-  background-color: #f0f0f0; /*background of app*/
-  font-family: sans-serif; /*font style*/
-  padding: 20px; /*space within container*/
-  box-sizing: border-box; /*paddings and borders are included in height/width*/
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-.App-header {
-  display: flex; /*turns on flexstyle*/
-  flex-direction: column; /*stacks child items vertically*/
-  align-items: center; /*center vertically*/
-  justify-content: center; /*centers horizontally*/
-}
-
-.App-link {
-  color: #61dafb;
+  display: flex; /* turns on flexstyle */
+  justify-content: center; /* centers horizontally */
+  align-items: center; /* centers vertically */
+  height: 100vh; /* full screen height */
+  overflow: hidden; /* hides any content that overflow's the element's box */
+  background-color: #f0f0f0; /* background of app */
+  font-family: sans-serif; /* font style */
+  padding: 20px; /* space within container */
+  box-sizing: border-box; /* paddings and borders are included in height/width */
 }
 
 .App {
-  text-align: center; /*centers text*/
-  display: flex; /*turns on flexstyle*/
-  flex-direction: column; /*aligns items in column*/
-  align-items: center; /*centers vertically*/
-  justify-content: center; /*centers horizontally*/
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  text-align: center; /* centers text */
+  display: flex; /* turns on flexstyle */
+  flex-direction: column; /* aligns items in column */
+  align-items: center; /* centers vertically */
+  justify-content: center; /* centers horizontally */
 }
 
 .rules {
-  display: flex; /*turns on flexstyle*/
-  flex-direction: column; /*directs content into a column*/
-  align-items: center; /*centers items vertically*/
-  justify-content: center; /*centers items horizontally*/
-  margin-right: 20px; /*space left to the right side*/
-  font-size: 1.2rem; /*content font size*/
+  display: flex; /* turns on flexstyle */
+  flex-direction: column; /* directs content into a column */
+  align-items: center; /* centers items vertically */
+  justify-content: center; /* centers items horizontally */
+  margin-right: 20px; /* space left to the right side */
+  font-size: 1.2rem; /* content font size */
 }
 
 .scoreboard {
-  display: flex; /*turns on flexstyle*/
-  flex-direction: column; /*directs content into a column*/
-  align-items: center; /*centers items vertically*/
-  justify-content: center; /*centers items horizontally*/
-  margin-left: 20px; /*space left to the left side*/
-  font-size: 1.2rem; /*content font size*/
+  display: flex; /* turns on flexstyle */
+  flex-direction: column; /* directs content into a column */
+  align-items: center; /* centers items vertically */
+  justify-content: center; /* centers items horizontally */
+  margin-left: 20px; /* space left to the left side */
+  font-size: 1.2rem; /* content font size */
 }
 
 .Sidebar {
-  width: 300px; /*sidebar width*/
-  height: 30%; /*sidebar height*/
-  padding: 10px; /*space within sidebar*/
-  background-color: #ffffff; /*sidebar color*/
-  border-radius: 10px; /*box corner curves*/
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /*box shadow*/
-  justify-content: center; /*aligns items horizontally*/
-  align-items: center; /*aligns items vertically*/
-  margin: 30px; /*margin around sidebar*/
+  width: 300px; /* sidebar width */
+  height: 30%; /* sidebar height */
+  padding: 10px; /* space within sidebar */
+  background-color: #ffffff; /* sidebar color */
+  border-radius: 10px; /* box corner curves */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* box shadow */
+  justify-content: center; /* aligns items horizontally */
+  align-items: center; /* aligns items vertically */
+  margin: 30px; /* margin around sidebar */
 }
 
 .grid {
-  display: grid;
+  display: grid; /* turn on grid display */
   grid-template-columns: repeat(5, 90px); /* 5 columns of 90px */
   grid-template-rows: repeat(5, 90px);    /* 5 rows of 90px */
   gap: 3px; /* spacing between cells */
-  justify-content: center; /*horizontally centers content*/
-  margin-top: 20px; /*space left at the top of the grid*/
+  justify-content: center; /* horizontally centers content */
+  margin-top: 20px; /* space left at the top of the grid */
 }
 
 .cell {
-  width: 90px; /*cell width*/
-  height: 90px; /*cell height*/
-  background-color: #0f7872; /*cell color*/
-  display: flex; /*enables flexbox style*/
-  align-items: center; /*vertically centers content*/
-  justify-content: center; /*horizontally centers content*/
-  font-size: 2rem; /*font size for content in cell*/
+  width: 90px; /* cell width */
+  height: 90px; /* cell height */
+  background-color: #0f7872; /* cell color */
+  display: flex; /* enables flexbox style */
+  align-items: center; /* vertically centers content */
+  justify-content: center; /* horizontally centers content */
+  font-size: 2rem; /* font size for content in cell */
 }
 
 .cell:hover {
-  background-color: #139891; /*color cell changes to when hovered over*/
+  background-color: #139891; /* color cell changes to when hovered over */
 }
 
 .cell.revealed {
-  background-color: #ddd; /*change cell color once it's revealed*/
+  background-color: #ddd; /* change cell color once it's revealed */
 }
 
 .cell.bomb {
@@ -128,27 +101,27 @@ h1 {
 }
 
 button {
-  margin-top: 40px; /*space above button*/
-  padding: 10px 20px; /*space within button*/
-  font-size: 16px; /*text size*/
-  background-color: lightblue; /*button color*/
+  margin-top: 40px; /* space above button */
+  padding: 10px 20px; /* space within button */
+  font-size: 16px; /* text size */
+  background-color: lightblue; /* button color */
   border: 1px solid #ccc; /* box border */
 }
 
 .popup {
-  position: fixed; /*fixes popup position*/
-  display: flex; /*enables flex display*/
-  align-items: center; /*vertically centers popup*/
-  justify-content: center; /*horizontally centers popup*/
+  position: fixed; /* fixes popup position */
+  display: flex; /* enables flex display */
+  align-items: center; /* vertically centers popup */
+  justify-content: center; /* horizontally centers popup */
 }
 
 .popup-content {
-  background-color: white; /*background color of popup*/
-  color: black; /*font color*/
-  padding: 10px 15px; /*space within popup*/
-  border-radius: 10px; /*curved edge of popup*/
-  text-align: center; /*centers text*/
-  font-size: 1rem; /*popup text font size*/
+  background-color: white; /* background color of popup */
+  color: black; /* font color */
+  padding: 10px 15px; /* space within popup */
+  border-radius: 10px; /* curved edge of popup */
+  text-align: center; /* centers text */
+  font-size: 1rem; /* popup text font size */
 }
 
 .dropdown {
@@ -163,9 +136,14 @@ button {
   background-color: lightblue; /* box background color */
 }
 
-.controls {
-  display: flex; /* turns on flexstyle */
-  gap: 20px; /* space between buttons */
-  align-items: center; /* centers content vertically */
+.difficulty-control {
+  display: flex; /* turn on flexstyle display */
   justify-content: center; /* centers content horizontally */
+  margin-bottom: 3px; /* margin below button */
+}
+
+.reset-button {
+  display: flex; /* turn on flexstyle display */
+  justify-content: center; /* centers content horizontally */
+  margin-top: 3px; /* margin above button */
 }

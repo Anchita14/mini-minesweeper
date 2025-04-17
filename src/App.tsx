@@ -13,8 +13,10 @@ const defaultGridSize = 5;
 // function to generate a random bomb location
 const generateBombLocation =
     (gridSize: number) => ({
-  row: Math.floor(Math.random() * gridSize),
-  col: Math.floor(Math.random() * gridSize),
+  //row: Math.floor(Math.random() * gridSize),
+  //col: Math.floor(Math.random() * gridSize),
+      row: 0,
+      col: 0,
 });
 
 // initializes a game board using a 2d array filled with cell objects using nested
@@ -101,7 +103,7 @@ const App = ({
     setShowResetConfirm(false);
   }, [gridSize]);
 
-  // countdown implementation for reseting the game
+  // countdown implementation for resetting the game
   useEffect(() => {
     if (countdown === null) return;
     if (countdown > 0) {
@@ -120,6 +122,7 @@ const App = ({
           <li>Click on a tile to reveal it</li>
           <li>Avoid the 💣</li>
           <li>Reveal all the safe cells to win</li>
+          <li>You can change the game size and difficulty mode</li>
         </ul>
       </div>
   );
@@ -174,7 +177,6 @@ const App = ({
                     key={`${i}-${j}`}
                     data-testid={`${i}-${j}`}
                     data-bomb-testid={cell.isBomb && exposeBombs ? "bomb" : undefined}
-                    data-cell-id={`${i}-${j}`}
                     className={`cell ${cell.isRevealed ? (cell.isBomb ? 
                         "bomb revealed" : "revealed") : ""}`}
                     onClick={() => revealCell(i, j)}
@@ -188,30 +190,33 @@ const App = ({
 
   // function to render game controls -- reset game and control difficulty
   // update game state and grid when difficulty changes
-  const renderControls = () => (
-      <div className="controls">
+  const renderDifficultyControl = () => (
+      <div className="difficulty-control">
+        <label>Difficulty:&nbsp;</label>
+        <select
+            value={gridSize}
+            onChange={(e) => {
+              const newSize = parseInt(e.target.value, 10);
+              setGridSize(newSize);
+              const newBombLocation = generateBombLocation(newSize);
+              setBombLocation(newBombLocation);
+              setGrid(generateGrid(newSize, newBombLocation));
+              setGameOver(false);
+              setGameWin(false);
+              setCountdown(null);
+              setShowResetConfirm(false);
+            }}
+        >
+          <option value={3}>3 x 3 (Easy)</option>
+          <option value={5}>5 x 5 (Medium)</option>
+          <option value={7}>7 x 7 (Hard)</option>
+        </select>
+      </div>
+  );
+
+  const renderResetButton = () => (
+      <div className="reset-button">
         <button onClick={() => setShowResetConfirm(true)}>🔄 Reset Game</button>
-        <div className="dropdown">
-          <label>Difficulty:&nbsp;</label>
-          <select
-              value={gridSize}
-              onChange={(e) => {
-                const newSize = parseInt(e.target.value, 10);
-                setGridSize(newSize);
-                const newBombLocation = generateBombLocation(newSize);
-                setBombLocation(newBombLocation);
-                setGrid(generateGrid(newSize, newBombLocation));
-                setGameOver(false);
-                setGameWin(false);
-                setCountdown(null);
-                setShowResetConfirm(false);
-              }}
-          >
-            <option value={3}>3 x 3 (Easy)</option>
-            <option value={5}>5 x 5 (Medium)</option>
-            <option value={7}>7 x 7 (Hard)</option>
-          </select>
-        </div>
       </div>
   );
 
@@ -222,8 +227,9 @@ const App = ({
         <div className="App">
           <h1>Mini Minesweeper</h1>
           {renderPopup()}
+          {renderDifficultyControl()}
           {renderGrid()}
-          {renderControls()}
+          {renderResetButton()}
         </div>
         {renderSidebarScoreboard()}
       </div>
