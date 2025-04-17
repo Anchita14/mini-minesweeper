@@ -12,10 +12,8 @@ const defaultGridSize = 5;
 
 // function to generate a random bomb location
 const generateBombLocation = (gridSize: number) => ({
-  // row: Math.floor(Math.random() * gridSize),
-  // col: Math.floor(Math.random() * gridSize),
-  row: 0,
-  col: 0,
+  row: Math.floor(Math.random() * gridSize),
+  col: Math.floor(Math.random() * gridSize),
 });
 
 // initializes a game board using a 2d array filled with cell objects using nested
@@ -35,10 +33,21 @@ const generateGrid = (gridSize: number, bombLocation: { row: number; col: number
 };
 
 // defines main react component for the game
-const App = ({ exposeBombs = false }) => {
-  const [gridSize, setGridSize] = useState(defaultGridSize);
-  const [bombLocation, setBombLocation] = useState(generateBombLocation(defaultGridSize));
-  const [grid, setGrid] = useState(() => generateGrid(defaultGridSize, bombLocation));
+const App = ({
+               exposeBombs = false,
+               initialBombLocation,
+               initialGridSize,
+             }: {
+  exposeBombs?: boolean;
+  initialBombLocation?: { row: number; col: number };
+  initialGridSize?: number;
+}) => {
+
+  const [gridSize, setGridSize] = useState(initialGridSize ?? defaultGridSize);
+  const [bombLocation, setBombLocation] = useState(
+      initialBombLocation ?? generateBombLocation(initialGridSize ?? defaultGridSize)
+  );
+  const [grid, setGrid] = useState(() => generateGrid(gridSize, bombLocation));
   const [gameOver, setGameOver] = useState(false);
   const [gameWin, setGameWin] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
@@ -152,13 +161,15 @@ const App = ({ exposeBombs = false }) => {
             row.map((cell, j) => (
                 <div
                     key={`${i}-${j}`}
-                    data-testid={cell.isBomb && exposeBombs ? "bomb" : undefined}
+                    data-testid={`${i}-${j}`}
+                    data-bomb-testid={cell.isBomb && exposeBombs ? "bomb" : undefined}
                     data-cell-id={`${i}-${j}`}
                     className={`cell ${cell.isRevealed ? (cell.isBomb ? "bomb revealed" : "revealed") : ""}`}
                     onClick={() => revealCell(i, j)}
                 >
                   {cell.isRevealed ? (cell.isBomb ? "💣" : "") : ""}
                 </div>
+
             ))
         )}
       </div>
