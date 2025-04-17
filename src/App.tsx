@@ -191,10 +191,10 @@ const App = ({
   // function to render game controls -- reset game and control difficulty
   // update game state and grid when difficulty changes
   const renderDifficultyControl = () => (
-      <div className="difficulty-control">
-        <label>Difficulty:&nbsp;</label>
+      <div className="difficulty-button">
         <select
-            value={gridSize}
+            defaultValue=""
+            data-testid="difficulty-select"
             onChange={(e) => {
               const newSize = parseInt(e.target.value, 10);
               setGridSize(newSize);
@@ -205,14 +205,21 @@ const App = ({
               setGameWin(false);
               setCountdown(null);
               setShowResetConfirm(false);
+              e.currentTarget.value = "";
             }}
         >
-          <option value={3}>3 x 3 (Easy)</option>
-          <option value={5}>5 x 5 (Medium)</option>
-          <option value={7}>7 x 7 (Hard)</option>
+          <option value="" disabled hidden>
+            🎯 Select Difficulty
+          </option>
+          <option value={3} data-testid="easy-option">3 x 3 (Easy)</option>
+          <option value={5} data-testid="medium-option">5 x 5 (Medium)</option>
+          <option value={7} data-testid="hard-option">7 x 7 (Hard)</option>
         </select>
       </div>
   );
+
+
+
 
   const renderResetButton = () => (
       <div className="reset-button">
@@ -227,12 +234,17 @@ const App = ({
         <div className="App">
           <h1>Mini Minesweeper</h1>
           {renderPopup()}
-          {renderDifficultyControl()}
-          {renderGrid()}
-          {renderResetButton()}
+
+          {/* wrapper around difficulty, grid, and reset button */}
+          <div className="game-wrapper">
+            {renderDifficultyControl()}
+            {renderGrid()}
+            {renderResetButton()}
+          </div>
         </div>
         {renderSidebarScoreboard()}
       </div>
+
   );
 };
 

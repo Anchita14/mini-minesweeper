@@ -21,7 +21,36 @@ describe("Mini Minesweeper Tests", () => {
     expect(bombPositions.size).toBeGreaterThan(1);
   });
 
-  //add default game test here
+  test("Test Default Game State on Initial Load", () => {
+    render(<App />);
+
+    // Title should be present
+    expect(screen.getByText("Mini Minesweeper")).toBeInTheDocument();
+
+    // Game Rules and Scoreboard sections
+    expect(screen.getByRole("heading", { name: "Game Rules" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Scoreboard" })).toBeInTheDocument();
+
+    // Scoreboard starts at 0
+    expect(screen.getByText(/🎉 Wins: 0/)).toBeInTheDocument();
+    expect(screen.getByText(/💥 Losses: 0/)).toBeInTheDocument();
+
+    // Reset button is present
+    expect(screen.getByRole("button", { name: /🔄 Reset Game/i })).toBeInTheDocument();
+
+    // Grid is rendered (default 5x5 = 25 cells)
+    for (let row = 0; row < 5; row++) {
+      for (let col = 0; col < 5; col++) {
+        expect(screen.getByTestId(`${row}-${col}`)).toBeInTheDocument();
+      }
+    }
+
+    // No revealed cells initially
+    const allCells = screen.getAllByTestId(/^\d-\d$/);
+    allCells.forEach(cell => {
+      expect(cell.classList.contains("revealed")).toBe(false);
+    });
+  });
 
   test("Test if Once a User Clicks a Cell it is Revealed", () => {
     render(
@@ -218,6 +247,28 @@ describe("Mini Minesweeper Tests", () => {
     }, { timeout: 6000 }); // Account for the 5-second countdown
   });
 
-  // difficulty level test
+  test("Test Difficulty Options Set Correct Grid Size", () => {
+    render(<App />);
+
+    const select = screen.getByTestId("difficulty-select");
+
+    // Select Easy (3x3): only 2-2 should exist
+    fireEvent.change(select, { target: { value: "3" } });
+    expect(screen.getByTestId("2-2")).toBeInTheDocument();
+    expect(screen.queryByTestId("4-4")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("6-6")).not.toBeInTheDocument();
+
+    // Select Medium (5x5): 4-4 should exist, 6-6 shouldn't
+    fireEvent.change(select, { target: { value: "5" } });
+    expect(screen.getByTestId("4-4")).toBeInTheDocument();
+    expect(screen.queryByTestId("6-6")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("2-2")).toBeInTheDocument(); // still valid
+
+    // Select Hard (7x7): 6-6 should exist
+    fireEvent.change(select, { target: { value: "7" } });
+    expect(screen.getByTestId("6-6")).toBeInTheDocument();
+    expect(screen.getByTestId("4-4")).toBeInTheDocument();
+    expect(screen.getByTestId("2-2")).toBeInTheDocument();
+  });
 
 });

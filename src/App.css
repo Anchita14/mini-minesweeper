@@ -31,14 +31,6 @@ h1 {
   box-sizing: border-box; /* paddings and borders are included in height/width */
 }
 
-.App {
-  text-align: center; /* centers text */
-  display: flex; /* turns on flexstyle */
-  flex-direction: column; /* aligns items in column */
-  align-items: center; /* centers vertically */
-  justify-content: center; /* centers horizontally */
-}
-
 .rules {
   display: flex; /* turns on flexstyle */
   flex-direction: column; /* directs content into a column */
@@ -75,7 +67,7 @@ h1 {
   grid-template-rows: repeat(5, 90px);    /* 5 rows of 90px */
   gap: 3px; /* spacing between cells */
   justify-content: center; /* horizontally centers content */
-  margin-top: 20px; /* space left at the top of the grid */
+  align-content: center;
 }
 
 .cell {
@@ -101,7 +93,6 @@ h1 {
 }
 
 button {
-  margin-top: 40px; /* space above button */
   padding: 10px 20px; /* space within button */
   font-size: 16px; /* text size */
   background-color: lightblue; /* button color */
@@ -124,10 +115,6 @@ button {
   font-size: 1rem; /* popup text font size */
 }
 
-.dropdown {
-  margin-top: 40px; /* space above dropdown button */
-}
-
 .dropdown select {
   padding: 8px 12px; /* spacing inside select box */
   font-size: 16px; /* text font size */
@@ -136,14 +123,24 @@ button {
   background-color: lightblue; /* box background color */
 }
 
-.difficulty-control {
-  display: flex; /* turn on flexstyle display */
-  justify-content: center; /* centers content horizontally */
-  margin-bottom: 3px; /* margin below button */
-}
-
 .reset-button {
   display: flex; /* turn on flexstyle display */
   justify-content: center; /* centers content horizontally */
-  margin-top: 3px; /* margin above button */
 }
+
+.game-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 90px;
+  gap: 20px; /* Increased for even vertical spacing */
+}
+
+.difficulty-button select {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: lightblue;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
