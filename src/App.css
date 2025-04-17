@@ -5,7 +5,7 @@
 
 h1 {
   position: absolute; /*positions content relative to nearest ancestor*/
-  top: 40px; /*space from top of container*/
+  top: 1px; /*space from top of container*/
   width: 100%; /*takes full width of block*/
   text-align: center; /*centers text within block*/
   font-size: 2.5rem; /*font size*/
@@ -15,8 +15,6 @@ h1 {
 .rules ul {
   padding-left: 20px;
 }
-
-
 
 .AppContainer {
   display: flex; /*turns on flexstyle*/
@@ -75,7 +73,6 @@ h1 {
   justify-content: center; /*centers items horizontally*/
   margin-right: 20px; /*space left to the right side*/
   font-size: 1.2rem; /*content font size*/
-  padding: 20px;
 }
 
 .scoreboard {
@@ -96,6 +93,7 @@ h1 {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /*box shadow*/
   justify-content: center; /*aligns items horizontally*/
   align-items: center; /*aligns items vertically*/
+  margin: 30px; /*margin around sidebar*/
 }
 
 .grid {
@@ -134,6 +132,7 @@ button {
   padding: 10px 20px; /*space within button*/
   font-size: 16px; /*text size*/
   background-color: lightblue; /*button color*/
+  border: 1px solid #ccc; /* box border */
 }
 
 .popup {
@@ -152,5 +151,21 @@ button {
   font-size: 1rem; /*popup text font size*/
 }
 
+.dropdown {
+  margin-top: 40px; /* space above dropdown button */
+}
 
+.dropdown select {
+  padding: 8px 12px; /* spacing inside select box */
+  font-size: 16px; /* text font size */
+  border-radius: 6px; /* rounds corners */
+  border: 1px solid #ccc; /* box border */
+  background-color: lightblue; /* box background color */
+}
 
+.controls {
+  display: flex; /* turns on flexstyle */
+  gap: 20px; /* space between buttons */
+  align-items: center; /* centers content vertically */
+  justify-content: center; /* centers content horizontally */
+}
