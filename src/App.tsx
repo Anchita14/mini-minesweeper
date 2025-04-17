@@ -11,14 +11,16 @@ type Cell = {
 const defaultGridSize = 5;
 
 // function to generate a random bomb location
-const generateBombLocation = (gridSize: number) => ({
+const generateBombLocation =
+    (gridSize: number) => ({
   row: Math.floor(Math.random() * gridSize),
   col: Math.floor(Math.random() * gridSize),
 });
 
 // initializes a game board using a 2d array filled with cell objects using nested
 // loops which are set to default cell objects for now
-const generateGrid = (gridSize: number, bombLocation: { row: number; col: number }) => {
+const generateGrid = (gridSize: number, bombLocation:
+{ row: number; col: number }) => {
   const newGrid: Cell[][] = [];
   for (let i = 0; i < gridSize; i++) {
     newGrid[i] = [];
@@ -42,11 +44,9 @@ const App = ({
   initialBombLocation?: { row: number; col: number };
   initialGridSize?: number;
 }) => {
-
   const [gridSize, setGridSize] = useState(initialGridSize ?? defaultGridSize);
   const [bombLocation, setBombLocation] = useState(
-      initialBombLocation ?? generateBombLocation(initialGridSize ?? defaultGridSize)
-  );
+      initialBombLocation ?? generateBombLocation(initialGridSize ?? defaultGridSize));
   const [grid, setGrid] = useState(() => generateGrid(gridSize, bombLocation));
   const [gameOver, setGameOver] = useState(false);
   const [gameWin, setGameWin] = useState(false);
@@ -61,6 +61,7 @@ const App = ({
     const newGrid = [...grid];
     newGrid[row][col].isRevealed = true;
 
+    // checks if the revealed cell is a bomb and then game is over
     if (newGrid[row][col].isBomb) {
       setGameOver(true);
       setLosses((prev) => prev + 1);
@@ -68,6 +69,7 @@ const App = ({
       return;
     }
 
+    // checking if all cells are revealed to see if the game has been won
     let allSafeRevealed = true;
     for (let i = 0; i < gridSize; i++) {
       for (let j = 0; j < gridSize; j++) {
@@ -77,6 +79,7 @@ const App = ({
       }
     }
 
+    // resets game is the game has been won
     if (allSafeRevealed) {
       setGameWin(true);
       setGameOver(true);
@@ -87,6 +90,7 @@ const App = ({
     setGrid(newGrid);
   };
 
+  // reset game function to start fresh
   const resetGame = useCallback(() => {
     const newBombLocation = generateBombLocation(gridSize);
     setBombLocation(newBombLocation);
@@ -97,6 +101,7 @@ const App = ({
     setShowResetConfirm(false);
   }, [gridSize]);
 
+  // countdown implementation for reseting the game
   useEffect(() => {
     if (countdown === null) return;
     if (countdown > 0) {
@@ -107,6 +112,7 @@ const App = ({
     }
   }, [countdown, resetGame]);
 
+  // function to provide game rules on the left section
   const renderSidebarRules = () => (
       <div className="Sidebar rules">
         <h2>Game Rules</h2>
@@ -118,6 +124,7 @@ const App = ({
       </div>
   );
 
+  // function to provide popup implementation for either resetting the game or game over
   const renderPopup = () => {
     if (!(gameOver || showResetConfirm)) return null;
     return (
@@ -141,6 +148,7 @@ const App = ({
     );
   };
 
+  // function to provide scoreboard implementation on the right section
   const renderSidebarScoreboard = () => (
       <div className="Sidebar scoreboard">
         <h2>Scoreboard</h2>
@@ -149,6 +157,9 @@ const App = ({
       </div>
   );
 
+  // function to create main minesweeper grid
+  // sets up css grid layout and map each cell to generate its div
+  // added test relating attributes like cell and bomb id
   const renderGrid = () => (
       <div
           className="grid"
@@ -164,17 +175,19 @@ const App = ({
                     data-testid={`${i}-${j}`}
                     data-bomb-testid={cell.isBomb && exposeBombs ? "bomb" : undefined}
                     data-cell-id={`${i}-${j}`}
-                    className={`cell ${cell.isRevealed ? (cell.isBomb ? "bomb revealed" : "revealed") : ""}`}
+                    className={`cell ${cell.isRevealed ? (cell.isBomb ? 
+                        "bomb revealed" : "revealed") : ""}`}
                     onClick={() => revealCell(i, j)}
                 >
                   {cell.isRevealed ? (cell.isBomb ? "💣" : "") : ""}
                 </div>
-
             ))
         )}
       </div>
   );
 
+  // function to render game controls -- reset game and control difficulty
+  // update game state and grid when difficulty changes
   const renderControls = () => (
       <div className="controls">
         <button onClick={() => setShowResetConfirm(true)}>🔄 Reset Game</button>
@@ -202,6 +215,7 @@ const App = ({
       </div>
   );
 
+  // main block that renders the full app layout
   return (
       <div className="AppContainer">
         {renderSidebarRules()}
