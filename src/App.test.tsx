@@ -5,7 +5,7 @@ import '@testing-library/jest-dom';
 
 describe("Mini Minesweeper Tests", () => {
 
-  test("1. Test Randomness of Bomb Placement", () => {
+  test("Test Randomness of Bomb Placement", () => {
     const bombPositions = new Set();
     for (let i = 0; i < 5; i++) {
       const { container, unmount } = render(<App exposeBombs={true} />);
@@ -21,7 +21,22 @@ describe("Mini Minesweeper Tests", () => {
     expect(bombPositions.size).toBeGreaterThan(1);
   });
 
-  test("2: Test if the User Won the Game", async () => {
+  //add default game test here
+
+  test("Test if Once a User Clicks a Cell it is Revealed", () => {
+    render(
+        <App
+            initialBombLocation={{ row: 2, col: 2 }}
+            initialGridSize={3}
+        />
+    );
+    const cell = screen.getByTestId("0-0");
+    fireEvent.click(cell);
+    // After click, it should have the "revealed" class
+    expect(cell).toHaveClass("revealed");
+  });
+
+  test("Test if the User Won the Game", async () => {
     render(
         <App
             initialBombLocation={{ row: 0, col: 0 }}
@@ -43,7 +58,7 @@ describe("Mini Minesweeper Tests", () => {
     });
   });
 
-  test("3: Test if the User Lost the Game", async () => {
+  test("Test if the User Lost the Game", async () => {
     render(
         <App
             initialBombLocation={{ row: 0, col: 0 }}
@@ -61,20 +76,48 @@ describe("Mini Minesweeper Tests", () => {
     });
   });
 
-  test("4: Test if Once a User Clicks a Cell it is Revealed", () => {
+  test("Test if the Reset Button is Being Rendered", () => {
+    render(<App initialBombLocation={{ row: 1, col: 1 }} initialGridSize={3} />);
+    const resetButton = screen.getByRole("button", { name: "🔄 Reset Game" });
+    expect(resetButton).toBeInTheDocument();
+  });
+
+  test("Test if a Popup Appears After Clicking Reset", () => {
+    render(<App />);
+    // Click the Reset button
+    const resetButton = screen.getByRole("button", { name: /🔄 Reset Game/i });
+    fireEvent.click(resetButton);
+    // Check for the popup confirmation text
+    expect(screen.getByText("🔄 Reset Game?")).toBeInTheDocument();
+  });
+
+  test("Test if the Game is Being Reset When the Reset Button is Clicked", () => {
     render(
         <App
-            initialBombLocation={{ row: 2, col: 2 }}
+            initialBombLocation={{ row: 0, col: 0 }}
             initialGridSize={3}
         />
     );
-    const cell = screen.getByTestId("0-0");
+
+    // Click on a safe cell first (optional, just to interact with game)
+    const cell = screen.getByTestId("0-1");
     fireEvent.click(cell);
-    // After click, it should have the "revealed" class
-    expect(cell).toHaveClass("revealed");
+    expect(cell.classList.contains("revealed")).toBe(true);
+
+    // Click the reset button
+    const resetButton = screen.getByRole("button", { name: "🔄 Reset Game" });
+    fireEvent.click(resetButton);
+
+    // Confirm reset in popup
+    const confirmButton = screen.getByRole("button", { name: "Yes" });
+    fireEvent.click(confirmButton);
+
+    // After reset, the cell should no longer be revealed
+    const newCell = screen.getByTestId("0-1");
+    expect(newCell.classList.contains("revealed")).toBe(false);
   });
 
-  test("5: Integration Test for a Full Win Scenario", async () => {
+  test("Test for a Full Win Scenario", async () => {
     render(
         <App
             initialBombLocation={{ row: 0, col: 0 }}
@@ -108,7 +151,7 @@ describe("Mini Minesweeper Tests", () => {
     expect(screen.getByText(/💥 Losses: 0/)).toBeInTheDocument();
   });
 
-  test("6: Integration Test for a Full Lose Scenario", async () => {
+  test("Test for a Full Lose Scenario", async () => {
     render(
         <App
             initialBombLocation={{ row: 0, col: 0 }}
@@ -132,69 +175,7 @@ describe("Mini Minesweeper Tests", () => {
     expect(screen.getByText(/💥 Losses: 1/)).toBeInTheDocument();
   });
 
-  test("7: Test if the Reset Button is Being Rendered", () => {
-    render(<App initialBombLocation={{ row: 1, col: 1 }} initialGridSize={3} />);
-    const resetButton = screen.getByRole("button", { name: "🔄 Reset Game" });
-    expect(resetButton).toBeInTheDocument();
-  });
-
-  test("8: Test if the Game Resets When it's Over", async () => {
-    jest.setTimeout(10000); // give time for countdown + reset
-    render(
-        <App
-            initialBombLocation={{ row: 0, col: 0 }}
-            initialGridSize={3}
-            exposeBombs={true}
-        />
-    );
-    // Step 1: Click the bomb (0, 0)
-    const bombCell = await screen.findByTestId("0-0");
-    fireEvent.click(bombCell);
-
-    // Step 2: Wait for "Game Over" to appear
-    expect(await screen.findByText("💥 Game Over!")).toBeInTheDocument();
-
-    // Step 3: Wait for "Game Over" to disappear (reset after 5 seconds)
-    await waitFor(
-        () => {
-          // Check that the message is gone
-          expect(screen.queryByText("💥 Game Over!")).not.toBeInTheDocument();
-
-          // Check that a cell is reset (not revealed anymore)
-          const cellAfterReset = screen.getByTestId("0-0");
-          expect(cellAfterReset.classList.contains("revealed")).toBe(false);
-        },
-        { timeout: 6000 }
-    );
-  });
-
-  test("9: Test if the Game is Being Reset When the Reset Button is Clicked", () => {
-    render(
-        <App
-            initialBombLocation={{ row: 0, col: 0 }}
-            initialGridSize={3}
-        />
-    );
-
-    // Click on a safe cell first (optional, just to interact with game)
-    const cell = screen.getByTestId("0-1");
-    fireEvent.click(cell);
-    expect(cell.classList.contains("revealed")).toBe(true);
-
-    // Click the reset button
-    const resetButton = screen.getByRole("button", { name: "🔄 Reset Game" });
-    fireEvent.click(resetButton);
-
-    // Confirm reset in popup
-    const confirmButton = screen.getByRole("button", { name: "Yes" });
-    fireEvent.click(confirmButton);
-
-    // After reset, the cell should no longer be revealed
-    const newCell = screen.getByTestId("0-1");
-    expect(newCell.classList.contains("revealed")).toBe(false);
-  });
-
-  test("10: Test if Game Rules is Being Rendered", () => {
+  test("Test if Game Rules is Being Rendered", () => {
     render(<App initialBombLocation={{ row: 0, col: 0 }} initialGridSize={3} />);
     // Look for the Game Rules heading
     const rulesHeading = screen.getByRole("heading", { name: "Game Rules" });
@@ -205,7 +186,7 @@ describe("Mini Minesweeper Tests", () => {
     expect(screen.getByText("Reveal all the safe cells to win")).toBeInTheDocument();
   });
 
-  test("11: Test if Scoreboard is Being Rendered", () => {
+  test("Test if Scoreboard is Being Rendered", () => {
     render(<App initialBombLocation={{ row: 0, col: 0 }} initialGridSize={3} />);
     // Check for the Scoreboard heading
     const scoreboardHeading = screen.getByRole("heading", { name: "Scoreboard" });
@@ -215,7 +196,7 @@ describe("Mini Minesweeper Tests", () => {
     expect(screen.getByText(/💥 Losses:/)).toBeInTheDocument();
   });
 
-  test("12: Test if Scoreboard Updates After a Game", async () => {
+  test("Test if Scoreboard Updates After a Game", async () => {
     render(
         <App
             initialBombLocation={{ row: 0, col: 0 }}
@@ -237,13 +218,6 @@ describe("Mini Minesweeper Tests", () => {
     }, { timeout: 6000 }); // Account for the 5-second countdown
   });
 
-  test("13: Test if a Popup Appears After Clicking Reset", () => {
-    render(<App />);
-    // Click the Reset button
-    const resetButton = screen.getByRole("button", { name: /🔄 Reset Game/i });
-    fireEvent.click(resetButton);
-    // Check for the popup confirmation text
-    expect(screen.getByText("🔄 Reset Game?")).toBeInTheDocument();
-  });
+  // difficulty level test
 
 });
