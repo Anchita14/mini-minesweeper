@@ -122,7 +122,7 @@ const App = ({
           <li>Click on a tile to reveal it</li>
           <li>Avoid the 💣</li>
           <li>Reveal all the safe cells to win</li>
-          <li>You can change the game size and difficulty mode</li>
+          <li>You can change the game difficulty mode</li>
         </ul>
       </div>
   );
