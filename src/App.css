@@ -115,9 +115,15 @@ button {
 /* popup overlay style */
 .popup {
   position: fixed; /* fixes popup position */
+  top: 0; /* anchor to top of the screen */
+  left: 0; /* anchor to left */
+  width: 100vw; /* take full width */
+  height: 100vh; /* take full height */
   display: flex; /* enables flex display */
-  align-items: center; /* vertically centers popup */
-  justify-content: center; /* horizontally centers popup */
+  align-items: center; /* vertically center popup */
+  justify-content: center; /* horizontally center popup */
+  background-color: rgba(0, 0, 0, 0.3); /* optional: slight dark overlay */
+  z-index: 1000; /* make sure it stays above everything */
 }
 
 /* popup box style */
@@ -142,9 +148,11 @@ button {
 /* difficulty dropdown box */
 .dropdown select,
 .difficulty-button select {
-  padding: 10px 20px; /* space within button */
+  padding: 10px 6px ; /* space within button */
   font-size: 16px; /* text front size */
   background-color: lightblue; /* button background color */
   border: 1px solid #ccc; /* border features */
   border-radius: 6px; /* border curves */
 }
+
+

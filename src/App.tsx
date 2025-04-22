@@ -221,7 +221,7 @@ const App = ({
   const renderDifficultyControl = () => (
       <div className="difficulty-button">
         <select
-            defaultValue=""
+            defaultValue="5"
             data-testid="difficulty-select"
             onChange={(e) => {
               const newSize = parseInt(e.target.value, 10);
@@ -233,15 +233,11 @@ const App = ({
               setGameWin(false);
               setCountdown(null);
               setShowResetConfirm(false);
-              e.currentTarget.value = "";
             }}
         >
-          <option value="" disabled hidden>
-            🎯 Select Difficulty
-          </option>
-          <option value={3} data-testid="easy-option">3 x 3 (Easy)</option>
-          <option value={5} data-testid="medium-option">5 x 5 (Medium)</option>
-          <option value={7} data-testid="hard-option">7 x 7 (Hard)</option>
+          <option value={3} data-testid="easy-option">🎯 Difficulty Level: Easy (3 x 3)</option>
+          <option value={5} data-testid="medium-option">🎯 Difficulty Level: Medium (5 x 5)</option>
+          <option value={7} data-testid="hard-option">🎯 Difficulty Level: Hard (7 x 7)</option>
         </select>
       </div>
   );
